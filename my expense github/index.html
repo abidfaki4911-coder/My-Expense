@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#0f5132">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>MyExpense</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+<script>
+if ("serviceWorker" in navigator) {
+    navigator.serviceWorker.register("sw.js");
+}
+</script>
+
+<body>
+
+<div class="app">
+
+    <!-- HEADER -->
+    <header class="header">
+
+        <div>
+            <h1>MyExpense</h1>
+            <p>Personal Finance Manager</p>
+        </div>
+
+        <div class="profile">W</div>
+
+    </header>
+
+
+    <!-- MONTH SELECTOR -->
+    <div class="month-bar">
+
+        <button onclick="changeMonth(-1)">‹</button>
+
+        <input
+            type="month"
+            id="monthSelector"
+            onchange="showDashboard()"
+        >
+
+        <button onclick="changeMonth(1)">›</button>
+
+    </div>
+
+
+    <!-- BALANCE -->
+    <section class="balance-card">
+
+        <p>Total Balance</p>
+
+        <h2 id="balance">৳ 0</h2>
+
+        <div class="balance-info">
+
+            <div>
+                <span>Income</span>
+                <strong id="income">৳ 0</strong>
+            </div>
+
+            <div>
+                <span>Expense</span>
+                <strong id="expense">৳ 0</strong>
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- QUICK ACTIONS -->
+    <div class="actions">
+
+        <button onclick="openForm('income')">
+            + Income
+        </button>
+
+        <button onclick="openForm('expense')">
+            − Expense
+        </button>
+
+    </div>
+
+
+    <!-- FORM -->
+    <div id="formArea"></div>
+
+
+    <!-- MONTHLY OVERVIEW -->
+    <section>
+
+        <div class="section-title">
+            <h2>Monthly Overview</h2>
+        </div>
+
+        <div class="summary">
+
+            <div class="box">
+                <span>Income</span>
+                <strong id="monthlyIncome">৳ 0</strong>
+            </div>
+
+            <div class="box">
+                <span>Expense</span>
+                <strong id="monthlyExpense">৳ 0</strong>
+            </div>
+
+            <div class="box">
+                <span>Savings</span>
+                <strong id="monthlySaving">৳ 0</strong>
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- BUDGET -->
+    <section class="panel">
+
+        <div class="section-title">
+            <h2>Monthly Budget</h2>
+
+            <button class="small-btn"
+                    onclick="setBudget()">
+                Set
+            </button>
+        </div>
+
+        <div class="budget-info">
+
+            <div>
+                <span>Budget</span>
+                <strong id="budgetAmount">৳ 0</strong>
+            </div>
+
+            <div>
+                <span>Remaining</span>
+                <strong id="budgetRemaining">৳ 0</strong>
+            </div>
+
+        </div>
+
+        <div class="progress">
+
+            <div id="budgetProgress"></div>
+
+        </div>
+
+    </section>
+
+
+    <!-- MONTH COMPARISON -->
+    <section class="panel">
+
+        <div class="section-title">
+            <h2>Monthly Comparison</h2>
+        </div>
+
+        <div class="comparison">
+
+            <div>
+                <span>Current Month</span>
+                <strong id="currentMonthExpense">
+                    ৳ 0
+                </strong>
+            </div>
+
+            <div>
+                <span>Previous Month</span>
+                <strong id="previousMonthExpense">
+                    ৳ 0
+                </strong>
+            </div>
+
+        </div>
+
+        <div class="change-box">
+
+            <span id="changeText">
+                No comparison yet
+            </span>
+
+        </div>
+
+    </section>
+
+
+    <!-- RECURRING EXPENSE -->
+    <section class="panel">
+
+        <div class="section-title">
+
+            <h2>Regular Expenses</h2>
+
+            <button class="small-btn"
+                    onclick="openRecurringForm()">
+                + Add
+            </button>
+
+        </div>
+
+        <p class="hint">
+            Reserved amount only. It is NOT counted as actual expense
+            until you add the real transaction.
+        </p>
+
+        <div id="recurringList"></div>
+
+    </section>
+
+
+    <!-- CATEGORY CHART -->
+    <section class="panel">
+
+        <div class="section-title">
+            <h2>Expense Categories</h2>
+        </div>
+
+        <div id="categoryChart"></div>
+
+    </section>
+
+
+    <!-- TRANSACTIONS -->
+    <section>
+
+        <div class="section-title">
+
+            <h2>Transaction History</h2>
+
+            <span id="transactionCount">
+                0 transactions
+            </span>
+
+        </div>
+
+        <div id="transactionList"></div>
+
+    </section>
+
+
+    <!-- BACKUP -->
+    <section class="panel backup">
+
+        <h2>Data Backup</h2>
+
+        <p>
+            Save your MyExpense data or restore it later.
+        </p>
+
+        <div class="backup-buttons">
+
+            <button onclick="exportData()">
+                Export Backup
+            </button>
+
+            <button onclick="document.getElementById('importFile').click()">
+                Import Backup
+            </button>
+
+        </div>
+
+        <input
+            type="file"
+            id="importFile"
+            accept=".json"
+            hidden
+            onchange="importData(event)"
+        >
+
+    </section>
+
+
+    <footer>
+        MyExpense © 2026
+    </footer>
+
+</div>
+
+
+<script src="script.js"></script>
+
+</body>
+</html>
